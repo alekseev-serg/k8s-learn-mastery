@@ -26,8 +26,7 @@ build maven-webapp:
     - Builder
   script:
     - echo 'Build maven app'
-    - cd sa-webapp/
-    - mvn install
+    - ls -la
   artifacts:
     paths:
       - sa-webapp/target
