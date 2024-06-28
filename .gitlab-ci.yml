@@ -1,11 +1,9 @@
 stages:
-  - build sa-frontend
-  - build maven sa-webapp
-  - build logic
+  - build
   - deploy
 
 build frontend:
-  stage: build sa-frontend
+  stage: build
   tags:
     - Builder
   script:
@@ -18,7 +16,7 @@ build frontend:
       - sa-frontend/build/
 
 build maven-webapp:
-  stage: build maven sa-webapp
+  stage: build
   tags:
     - Builder
   script:
@@ -28,3 +26,14 @@ build maven-webapp:
   artifacts:
     paths:
       - sa-webapp/target
+
+build logic:
+  stage: build
+  tags:
+    - Builder
+  script:
+    - echo 'Build backend'
+    - cd sa-logic/sa
+    - python3 -m pip install -r requirements.txt
+    - python3 -m textblob.download_corpora
+    - python3 sentiment_analysis.py
