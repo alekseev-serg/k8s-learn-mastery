@@ -4,7 +4,6 @@ stages:
   - build logic
   - deploy
 
-
 build frontend:
   stage: build sa-frontend
   tags:
@@ -24,7 +23,8 @@ build maven-webapp:
     - Builder
   script:
     - echo 'Build maven app'
-    - ls -la
+    - cd sa-webapp/
+    - mvn install
   artifacts:
     paths:
       - sa-webapp/target
