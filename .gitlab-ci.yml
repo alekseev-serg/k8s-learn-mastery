@@ -1,12 +1,12 @@
 stages:
-  - build frontend
-  - build maven webapp
+  - build sa-frontend
+  - build maven sa-webapp
   - build logic
   - deploy
 
 
-build sa-frontend:
-  stage: build frontend
+build frontend:
+  stage: build sa-frontend
   when: manual
   tags:
     - Builder
@@ -19,8 +19,8 @@ build sa-frontend:
     paths:
       - sa-frontend/build/
 
-build sa-logic:
-  stage: build maven webapp
+build maven-webapp:
+  stage: build maven sa-webapp
   when: manual
   tags:
     - Builder
