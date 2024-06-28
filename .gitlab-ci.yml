@@ -16,4 +16,4 @@ build sa-frontend:
     - npm run build
   artifacts:
     paths:
-      - dist/
+      - build/
