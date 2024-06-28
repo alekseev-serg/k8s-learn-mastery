@@ -1,0 +1,13 @@
+stages:
+  - build frontend
+  - build logic
+  - build webapp
+  - deploy
+
+
+build frontend:
+  stage: build frontend
+  tags:
+    - Builder
+  script:
+    - echo 'Hello World'
