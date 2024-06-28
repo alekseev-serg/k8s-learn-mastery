@@ -5,9 +5,15 @@ stages:
   - deploy
 
 
-build frontend:
+build sa-frontend:
   stage: build frontend
   tags:
     - Builder
   script:
-    - echo 'Hello World'
+    - echo 'Start Build Frontend'
+    - cd sa-frontend/
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
