@@ -10,7 +10,7 @@ build frontend:
     - cd sa-frontend/
     - npm install
     - npm run build
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin $CI_REGISTRY
+    - echo $CI_REGISTRY_PASSWORD | docker login hub.docker.com -u $DOCKER_USER_ID --password-stdin $CI_REGISTRY
   artifacts:
     paths:
       - sa-frontend/build/
