@@ -10,7 +10,7 @@ build frontend:
     - cd sa-frontend/
     - npm install
     - npm run build
-    - echo $CI_REGISTRY_PASSWORD | docker login registry-1.docker.io -u $DOCKER_USER_ID --password-stdin
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
     - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-frontend .
     - docker push $DOCKER_USER_ID/sentiment-analysis-frontend
   artifacts:
