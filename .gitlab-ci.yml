@@ -1,6 +1,5 @@
 stages:
   - build
-  - deploy
 
 build frontend:
   stage: build
@@ -11,28 +10,29 @@ build frontend:
     - cd sa-frontend/
     - npm install
     - npm run build
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin $CI_REGISTRY
   artifacts:
     paths:
       - sa-frontend/build/
 
-build maven-webapp:
-  stage: build
-  tags:
-    - Builder
-  script:
-    - echo 'Build maven app'
-    - cd sa-webapp/
-    - mvn install
-  artifacts:
-    paths:
-      - sa-webapp/target
-
-build logic:
-  stage: build
-  tags:
-    - Builder
-  script:
-    - echo 'Build backend'
-    - cd sa-logic/sa
-    - pip3 install -r requirements.txt
-    - python3 -m textblob.download_corpora
+#build logic-python:
+#  stage: build
+#  tags:
+#    - Builder
+#  script:
+#    - echo 'Build backend'
+#    - cd sa-logic/sa
+#    - pip3 install -r requirements.txt
+#    - python3 -m textblob.download_corpora
+#
+#build maven-webapp:
+#  stage: build
+#  tags:
+#    - Builder
+#  script:
+#    - echo 'Build maven app'
+#    - cd sa-webapp/
+#    - mvn install
+#  artifacts:
+#    paths:
+#      - sa-webapp/target
