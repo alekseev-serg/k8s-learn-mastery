@@ -1,8 +1,15 @@
 stages:
-  - build
+  - build-run-frontend
+  - build-run-webapp
+  - build-run-logic
+
+before_script:
+  - docker stop $(docker ps -a -q)
+  - docker rm $(docker ps -a -q)
+  - docker rmi $(docker images -a -q)
 
 build frontend:
-  stage: build
+  stage: build-run-frontend
   tags:
     - Builder
   script:
@@ -17,22 +24,16 @@ build frontend:
     paths:
       - sa-frontend/build/
 
-build logic-python:
-  stage: build
+run frontend:
+  stage: build-run-frontend
   tags:
     - Builder
   script:
-    - echo 'Build backend'
-    - cd sa-logic/sa
-    - pip3 install -r requirements.txt
-    - python3 -m textblob.download_corpora
-    - cd ..
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
-    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-logic .
-    - docker push $DOCKER_USER_ID/sentiment-analysis-logic
+    - docker run -d -p 80:80 $DOCKER_USER_ID/sentiment-analysis-frontend
+
 
 build maven-webapp:
-  stage: build
+  stage: build-run-webapp
   tags:
     - Builder
   script:
@@ -46,6 +47,31 @@ build maven-webapp:
     paths:
       - sa-webapp/target
 
-# docker run -d -p 80:80 showtime58/sentiment-analysis-frontend
-# docker run -d -p 5000:5000 showtime58/sentiment-analysis-logic
-# docker run -d -p 8080:8080 showtime58/sentiment-analysis-web-app
+run maven-webapp:
+  stage: build-run-webapp
+  tags:
+    - Builder
+  script:
+    - docker run -d -p 8080:8080 showtime58/sentiment-analysis-web-app
+
+
+build logic-python:
+  stage: build-run-logic
+  tags:
+    - Builder
+  script:
+    - echo 'Build backend'
+    - cd sa-logic/sa
+    - pip3 install -r requirements.txt
+    - python3 -m textblob.download_corpora
+    - cd ..
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
+    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-logic .
+    - docker push $DOCKER_USER_ID/sentiment-analysis-logic
+
+run logic-python:
+  stage: build-run-logic
+  tags:
+    - Builder
+  script:
+    - docker run -d -p 8080:8080 showtime58/sentiment-analysis-web-app
