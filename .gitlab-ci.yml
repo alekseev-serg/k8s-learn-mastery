@@ -1,21 +1,21 @@
 stages:
   - build
 
-#build frontend:
-#  stage: build
-#  tags:
-#    - Builder
-#  script:
-#    - echo 'Start Build Frontend'
-#    - cd sa-frontend/
-#    - npm install
-#    - npm run build
-#    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
-#    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-frontend .
-#    - docker push $DOCKER_USER_ID/sentiment-analysis-frontend
-#  artifacts:
-#    paths:
-#      - sa-frontend/build/
+build frontend:
+  stage: build
+  tags:
+    - Builder
+  script:
+    - echo 'Start Build Frontend'
+    - cd sa-frontend/
+    - npm install
+    - npm run build
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
+    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-frontend .
+    - docker push $DOCKER_USER_ID/sentiment-analysis-frontend
+  artifacts:
+    paths:
+      - sa-frontend/build/
 
 build logic-python:
   stage: build
@@ -31,17 +31,17 @@ build logic-python:
     - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-logic .
     - docker push $DOCKER_USER_ID/sentiment-analysis-logic
 
-#build maven-webapp:
-#  stage: build
-#  tags:
-#    - Builder
-#  script:
-#    - echo 'Build maven app'
-#    - cd sa-webapp/
-#    - mvn install
-#    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
-#    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-web-app .
-#    - docker push $DOCKER_USER_ID/sentiment-analysis-web-app
-#  artifacts:
-#    paths:
-#      - sa-webapp/target
+build maven-webapp:
+  stage: build
+  tags:
+    - Builder
+  script:
+    - echo 'Build maven app'
+    - cd sa-webapp/
+    - mvn install
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin
+    - docker build -f Dockerfile -t $DOCKER_USER_ID/sentiment-analysis-web-app .
+    - docker push $DOCKER_USER_ID/sentiment-analysis-web-app
+  artifacts:
+    paths:
+      - sa-webapp/target
