@@ -45,3 +45,7 @@ build maven-webapp:
   artifacts:
     paths:
       - sa-webapp/target
+
+# docker run -d -p 80:80 showtime58/sentiment-analysis-frontend
+# docker run -d -p 5000:5000 showtime58/sentiment-analysis-logic
+# docker run -d -p 8080:8080 showtime58/sentiment-analysis-web-app
