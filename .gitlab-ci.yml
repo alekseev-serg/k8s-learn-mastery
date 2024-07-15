@@ -2,11 +2,15 @@ stages:
   - build-run-frontend
   - build-run-webapp
   - build-run-logic
+  - remove-all-containers
 
-before_script:
-  - docker stop $(docker ps -a -q)
-  - docker rm $(docker ps -a -q)
-  - docker rmi $(docker images -a -q)
+stop_all_containers:
+  stage: remove-all-containers
+  when: manual
+  script:
+    - docker stop $(docker ps -a -q)
+    - docker rm $(docker ps -a -q)
+    - docker rmi $(docker images -a -q)
 
 build frontend:
   stage: build-run-frontend
