@@ -6,6 +6,8 @@ stages:
 
 stop_all_containers:
   stage: remove-all-containers
+  tags:
+    - Builder
   when: manual
   script:
     - docker stop $(docker ps -a -q)
