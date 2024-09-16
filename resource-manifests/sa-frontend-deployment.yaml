@@ -21,7 +21,7 @@ spec:
         app: sa-frontend                                  # 6
     spec:
       containers:
-        - image: showtime58/sentiment-analysis-frontend
+        - image: showtime58/sentiment-analysis-frontend:minikube
           imagePullPolicy: Always                         # 7
           name: sa-frontend
           ports:
